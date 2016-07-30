@@ -19,7 +19,7 @@
 (defun kkr-vv (values)
   (list "value" (delete-dups values)))
 
-(defun draw-values (cell)
+(defun kkr-draw-values (cell)
   (concat " "
           (apply 'concat (mapcar (lambda (x)
                                    (if (member x (cl-second cell))
@@ -27,10 +27,10 @@
                                      "."))
                                  (number-sequence 1 9)))))
 
-(defun draw-value (cell)
+(defun kkr-draw-value (cell)
   (if (= 1 (length (cl-second cell)))
     (format "     %d    " (car (cl-second cell)))
-    (draw-values cell)))
+    (kkr-draw-values cell)))
 
 (defun kkr-draw (cell)
   (cond
@@ -38,5 +38,10 @@
     ((equal "across" (car cell)) (format "   --\\%2d  " (cl-second cell)))
     ((equal "down" (car cell)) (format "   %2d\\--  " (cl-second cell)))
     ((equal "downacross" (car cell)) (format "   %2d\\%2d  " (cl-second cell) (cl-third cell)))
-    ((equal "value" (car cell)) (draw-value cell))
+    ((equal "value" (car cell)) (kkr-draw-value cell))
     (t cell)))
+
+(defun kkr-draw-row (row)
+  (concat
+    (apply 'concat (mapcar 'kkr-draw row))
+    "\n"))
