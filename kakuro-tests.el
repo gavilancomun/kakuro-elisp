@@ -20,7 +20,15 @@
              ""
              (should (equal "    4\\--  " (kkr-draw (kkr-d 4)))))
 
-(ert-deftest kkr-test-da()
+(ert-deftest kkr-test-da ()
              ""
              (should (equal "    3\\ 4  " (kkr-draw (kkr-da 3 4)))))
+
+(ert-deftest kkr-test-v ()
+             ""
+             (should (equal " 123456789" (kkr-draw (kkr-v)))))
+
+(ert-deftest kkr-test-vv ()
+             ""
+             (should (equal " 12......." (kkr-draw (kkr-vv '(1 2))))))
 
