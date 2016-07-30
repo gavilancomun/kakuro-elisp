@@ -51,3 +51,10 @@
                (should (equal 10 (length results)))
                (should (equal 6 (length (cl-remove-if-not 'kkr-all-different results))))))
 
+(ert-deftest kkr-test-transpose ()
+             ""
+             (let ((ints '((1 2 3 4) (1 2 3 4) (1 2 3 4))))
+               (let ((tr (kkr-transpose ints)))
+                 (should (equal (length ints) (length (car tr))))
+                 (should (equal (length (car ints)) (length tr))))))
+
