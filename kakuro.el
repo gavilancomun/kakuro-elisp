@@ -45,3 +45,16 @@
   (concat
     (apply 'concat (mapcar 'kkr-draw row))
     "\n"))
+
+(defun kkr-product (colls)
+  (cond
+    ((= 0 (length colls)) '())
+    ((= 1 (length colls)) (mapcar 'list (car colls)))
+    (t (let ((head (car colls))
+             (tail-prod (kkr-product (cdr colls))))
+         (apply 'append (mapcar (lambda (x)
+                                  (mapcar (lambda (y)
+                                            (append (list x) y))
+                                          tail-prod))
+                                head))))))
+

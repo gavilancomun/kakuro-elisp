@@ -37,3 +37,9 @@
              (let ((line (list (kkr-da 3 4) (kkr-v) (kkr-vv '(1 2)) (kkr-d 4) (kkr-e) (kkr-a 5) (kkr-vv '(4)) (kkr-vv '(1)))))
                (should (equal "    3\\ 4   123456789 12.......    4\\--     -----     --\\ 5       4         1    \n" (kkr-draw-row line)))))
 
+(ert-deftest kkr-test-products ()
+             ""
+             (let ((data '((1 2) (10) (100 200 300)))
+                   (expected '((1 10 100) (1 10 200) (1 10 300) (2 10 100) (2 10 200) (2 10 300))))
+               (should (equal expected (kkr-product data)))))
+
