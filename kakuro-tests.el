@@ -12,3 +12,15 @@
              ""
              (should (equal "   -----  " (kkr-draw (kkr-e)))))
 
+(ert-deftest kkr-test-across ()
+             ""
+             (should (equal "   --\\ 5  " (kkr-draw (kkr-a 5)))))
+
+(ert-deftest kkr-test-down ()
+             ""
+             (should (equal "    4\\--  " (kkr-draw (kkr-d 4)))))
+
+(ert-deftest kkr-test-da()
+             ""
+             (should (equal "    3\\ 4  " (kkr-draw (kkr-da 3 4)))))
+
