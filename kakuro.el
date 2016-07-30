@@ -21,11 +21,12 @@
 
 (defun kkr-draw-values (cell)
   (concat " "
-          (apply 'concat (mapcar (lambda (x)
-                                   (if (member x (cl-second cell))
-                                     (number-to-string x)
-                                     "."))
-                                 (number-sequence 1 9)))))
+          (mapconcat (lambda (x)
+                       (if (member x (cl-second cell))
+                         (number-to-string x)
+                         "."))
+                     (number-sequence 1 9)
+                     "")))
 
 (defun kkr-draw-value (cell)
   (if (= 1 (length (cl-second cell)))
@@ -69,4 +70,7 @@
 
 (defun kkr-transpose (m)
   (apply 'cl-mapcar 'list m))
+
+(defun kkr-is-possible (cell n)
+  (member n (cl-second cell)))
 

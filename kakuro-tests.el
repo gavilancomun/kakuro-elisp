@@ -58,3 +58,9 @@
                  (should (equal (length ints) (length (car tr))))
                  (should (equal (length (car ints)) (length tr))))))
 
+(ert-deftest kkr-test-is-possible ()
+             ""
+             (let ((vc (kkr-vv '(1 2 3))))
+               (should (kkr-is-possible vc 2))
+               (should-not (kkr-is-possible vc 4))))
+
