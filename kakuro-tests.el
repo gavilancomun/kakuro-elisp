@@ -1,4 +1,6 @@
 
+(require 'cl-lib)
+
 (add-to-list 'load-path ".")
 (load "kakuro.el")
 
@@ -42,4 +44,10 @@
              (let ((data '((1 2) (10) (100 200 300)))
                    (expected '((1 10 100) (1 10 200) (1 10 300) (2 10 100) (2 10 200) (2 10 300))))
                (should (equal expected (kkr-product data)))))
+
+(ert-deftest kkr-test-permutes ()
+             ""
+             (let ((results (kkr-permute-all (list (kkr-v) (kkr-v) (kkr-v)) 6)))
+               (should (equal 10 (length results)))
+               (should (equal 6 (length (cl-remove-if-not 'kkr-all-different results))))))
 

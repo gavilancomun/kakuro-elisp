@@ -17,7 +17,7 @@
   '("value" (1 2 3 4 5 6 7 8 9)))
 
 (defun kkr-vv (values)
-  (list "value" (delete-dups values)))
+  (list "value" (cl-remove-duplicates values)))
 
 (defun kkr-draw-values (cell)
   (concat " "
@@ -57,4 +57,13 @@
                                             (append (list x) y))
                                           tail-prod))
                                 head))))))
+
+(defun kkr-all-different (nums)
+  (= (length nums) (length (cl-remove-duplicates nums))))
+
+(defun kkr-permute-all (vs target)
+  (let ((values (mapcar 'cl-second vs)))
+    (cl-remove-if-not (lambda (x) 
+                        (= target (apply '+ x)))
+                      (kkr-product values))))
 
