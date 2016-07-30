@@ -64,3 +64,8 @@
                (should (kkr-is-possible vc 2))
                (should-not (kkr-is-possible vc 4))))
 
+(ert-deftest kkr-test-value-equality ()
+             ""
+             (should (equal (kkr-v) (kkr-v)))
+             (should (equal (kkr-vv '(1 2)) (kkr-vv '(1 2)))))
+
