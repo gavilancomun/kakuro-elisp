@@ -43,7 +43,7 @@
 
 (defun kkr-draw-row (row)
   (concat
-    (apply 'concat (mapcar 'kkr-draw row))
+    (mapconcat 'kkr-draw row "")
     "\n"))
 
 (defun kkr-product (colls)
