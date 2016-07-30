@@ -17,7 +17,7 @@
   '(:value (1 2 3 4 5 6 7 8 9)))
 
 (defun kkr-vv (values)
-  (list :value (cl-remove-duplicates values)))
+  (list :value (sort (cl-remove-duplicates values) '<)))
 
 (defun kkr-draw-values (cell)
   (concat " "
@@ -73,4 +73,14 @@
 
 (defun kkr-is-possible (cell n)
   (member n (cl-second cell)))
+
+(defun kkr-solve-step (cells total)
+  (let ((final (- (length cells) 1)))
+    (let ((p1 (kkr-permute-all cells total)))
+      (let ((p2 (cl-remove-if-not (lambda (x)
+                                    (kkr-is-possible (nth final cells) (nth final x)))
+                                  p1)))
+        (let ((perms (cl-remove-if-not 'kkr-all-different p2)))
+          (cl-mapcar (lambda (x) (kkr-vv x))
+                     (kkr-transpose perms)))))))
 

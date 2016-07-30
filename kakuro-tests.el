@@ -69,3 +69,9 @@
              (should (equal (kkr-v) (kkr-v)))
              (should (equal (kkr-vv '(1 2)) (kkr-vv '(1 2)))))
 
+(ert-deftest kkr-test-solvestep ()
+             ""
+             (let ((result (kkr-solve-step (list (kkr-vv '(1 2)) (kkr-v)) 5)))
+               (should (equal (kkr-vv '(1 2)) (cl-first result)))
+               (should (equal (kkr-vv '(3 4)) (cl-second result)))))
+
