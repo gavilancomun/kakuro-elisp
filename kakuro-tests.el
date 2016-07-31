@@ -138,3 +138,18 @@
                (should (equal (kkr-vv '(2)) (cl-second result)))
                (should (equal (kkr-vv '(1)) (cl-third result)))))
 
+(ert-deftest kkr-test-solver ()
+             ""
+             (let* ((grid1 (list (list (kkr-e) (kkr-d 4) (kkr-d 22) (kkr-e) (kkr-d 16) (kkr-d 3))
+                                 (list (kkr-a 3) (kkr-v) (kkr-v) (kkr-da 16 6) (kkr-v) (kkr-v))
+                                 (list (kkr-a 18) (kkr-v) (kkr-v) (kkr-v) (kkr-v) (kkr-v))
+                                 (list (kkr-e) (kkr-da 17 23) (kkr-v) (kkr-v) (kkr-v) (kkr-d 14))
+                                 (list (kkr-a 9) (kkr-v) (kkr-v) (kkr-a 6) (kkr-v) (kkr-v))
+                                 (list (kkr-a 15) (kkr-v) (kkr-v) (kkr-a 12) (kkr-v) (kkr-v))))
+                    (result (kkr-solver grid1)))
+               (should (equal "   --\\ 3       1         2       16\\ 6       4         2    \n" (kkr-draw-row (cl-second result))))
+               (should (equal "   --\\18       3         5         7         2         1    \n" (kkr-draw-row (cl-third result))))
+               (should (equal "   -----     17\\23       8         9         6       14\\--  \n" (kkr-draw-row (cl-fourth result))))
+               (should (equal "   --\\ 9       8         1       --\\ 6       1         5    \n" (kkr-draw-row (cl-fifth result))))
+               (should (equal "   --\\15       9         6       --\\12       3         9    \n" (kkr-draw-row (cl-sixth result))))))
+

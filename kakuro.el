@@ -49,6 +49,9 @@
     (mapconcat 'kkr-draw row "")
     "\n"))
 
+(defun kkr-draw-grid (grid)
+  (mapconcat 'kkr-draw-row grid ""))
+
 (defun kkr-product (colls)
   (cond
     ((= 0 (length colls)) '())
@@ -111,4 +114,17 @@
 
 (defun kkr-solve-column (column)
   (kkr-solve-line column (lambda (x) (cl-second x))))
+
+(defun kkr-solve-grid (grid)
+  (let* ((g1 (cl-mapcar 'kkr-solve-row grid))
+         (g2 (kkr-transpose g1))
+         (g3 (cl-mapcar 'kkr-solve-column g2)))
+    (kkr-transpose g3)))
+
+(defun kkr-solver (grid)
+  (print (kkr-draw-grid grid))
+  (let ((g (kkr-solve-grid grid)))
+    (if (equal g grid)
+      g
+      (kkr-solver g))))
 
