@@ -116,3 +116,13 @@
                (should (equal (kkr-vv '(1 2)) (cl-second result)))
                (should (equal (kkr-vv '(1 2)) (cl-third result)))))
 
+(ert-deftest kkr-test-solve-pair ()
+             ""
+  (let* ((line (list (kkr-da 3 4) (kkr-v) (kkr-v) (kkr-d 4) (kkr-e) (kkr-a 5) (kkr-v) (kkr-v)))
+         (result (kkr-solve-line line (lambda (x) (car (last x))))))
+    (should (equal 8 (length result)))
+    (should (equal (kkr-vv '(1 3)) (cl-second result)))
+    (should (equal (kkr-vv '(1 3)) (cl-third result)))
+    (should (equal (kkr-vv '(1 2 3 4)) (cl-seventh result)))
+    (should (equal (kkr-vv '(1 2 3 4)) (cl-eighth result)))))
+

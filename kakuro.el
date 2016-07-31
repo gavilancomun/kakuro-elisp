@@ -97,8 +97,12 @@
 
 (defun kkr-solve-pair (f pair)
   (let* ((nvs (car pair))
-         (vs (cadr pair))) 
+         (vs (cl-second pair))) 
     (if (null vs)
       nvs
       (append nvs (kkr-solve-step vs (funcall f (-last-item nvs)))))))
+
+(defun kkr-solve-line (line f)
+  (let ((pairs (kkr-pair-targets-with-values line)))
+    (-mapcat (-partial 'kkr-solve-pair f) pairs)))
 
