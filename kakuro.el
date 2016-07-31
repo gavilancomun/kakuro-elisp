@@ -82,3 +82,6 @@
     (cl-mapcar (lambda (x) (kkr-vv x))
                (kkr-transpose perms))))
 
+(defun kkr-gather-values (line)
+  (-partition-by (lambda (x) (equal :value (car x))) line))
+

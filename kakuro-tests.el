@@ -82,7 +82,18 @@
              ""
              (should (equal '(5 6) (-drop 4 '(1 2 3 4 5 6)))))
 
-(ert-deftest kkr-test-take()
+(ert-deftest kkr-test-take ()
              ""
              (should (equal '(1 2 3 4) (-take 4 '(1 2 3 4 5 6)))))
+
+(ert-deftest kkr-test-gather ()
+             ""
+             (let* ((line (list (kkr-da 3 4) (kkr-v) (kkr-v) (kkr-d 4) (kkr-e) (kkr-a 4) (kkr-v) (kkr-v)))
+                    (result (kkr-gather-values line)))
+               (princ result)
+               (should (equal 4 (length result)))
+               (should (equal (kkr-da 3 4) (caar result)))
+               (should (equal (kkr-d 4) (caar (cddr result))))
+               (should (equal (kkr-e) (cl-second (car (cddr result)))))
+               (should (equal (kkr-a 4) (cadr (cdar (cddr result)))))))
 
