@@ -90,10 +90,29 @@
              ""
              (let* ((line (list (kkr-da 3 4) (kkr-v) (kkr-v) (kkr-d 4) (kkr-e) (kkr-a 4) (kkr-v) (kkr-v)))
                     (result (kkr-gather-values line)))
-               (princ result)
                (should (equal 4 (length result)))
                (should (equal (kkr-da 3 4) (caar result)))
                (should (equal (kkr-d 4) (caar (cddr result))))
                (should (equal (kkr-e) (cl-second (car (cddr result)))))
                (should (equal (kkr-a 4) (cadr (cdar (cddr result)))))))
+
+(ert-deftest kkr-test-pair-targets ()
+             ""
+             (let* ((line (list (kkr-da 3 4) (kkr-v) (kkr-v) (kkr-d 4) (kkr-e) (kkr-a 4) (kkr-v) (kkr-v)))
+                    (result (kkr-pair-targets-with-values line)))
+               (should (equal 2 (length result)))
+               (should (equal (kkr-da 3 4) (car (caar result))))
+               (should (equal (kkr-d 4) (caar (cl-second result))))
+               (should (equal (kkr-e) (cl-second (car (cl-second result)))))
+               (should (equal (kkr-a 4) (cadr (cdar (cl-second result)))))))
+
+(ert-deftest kkr-test-solve-pair ()
+             ""
+             (let* ((line (list (kkr-da 3 4) (kkr-v) (kkr-v) (kkr-d 4) (kkr-e) (kkr-a 4) (kkr-v) (kkr-v)))
+                    (pairs (kkr-pair-targets-with-values line))
+                    (pair (car pairs))
+                    (result (kkr-solve-pair 'cl-second pair)))
+               (should (equal 3 (length result)))
+               (should (equal (kkr-vv '(1 2)) (cl-second result)))
+               (should (equal (kkr-vv '(1 2)) (cl-third result)))))
 

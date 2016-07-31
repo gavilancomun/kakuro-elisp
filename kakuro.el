@@ -85,3 +85,20 @@
 (defun kkr-gather-values (line)
   (-partition-by (lambda (x) (equal :value (car x))) line))
 
+(defun kkr-pair-targets-with-values (line)
+  (-partition-all 2 (kkr-gather-values line)))
+
+(defun kkr-solve-step (cells total)
+  (let* ((final (- (length cells) 1))
+         (p1 (kkr-permute-all cells total))
+         (p2 (--filter (kkr-is-possible (nth final cells) (nth final it)) p1))
+         (perms (-filter 'kkr-all-different p2)))
+    (cl-mapcar (lambda (x) (kkr-vv x)) (kkr-transpose perms))))
+
+(defun kkr-solve-pair (f pair)
+  (let* ((nvs (car pair))
+         (vs (cadr pair))) 
+    (if (null vs)
+      nvs
+      (append nvs (kkr-solve-step vs (funcall f (-last-item nvs)))))))
+
