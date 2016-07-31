@@ -1,14 +1,13 @@
+(setq lexical-binding t)
+
+(require 'package)
+(package-initialize)
 
 (require 'cl-lib)
+(require 'dash)
 
 (add-to-list 'load-path ".")
-(load "kakuro.el")
-
-(ert-deftest pp-test-quote ()
-       "Tests the rendering of `quote' symbols in `pp-to-string'."
-       (should (equal (pp-to-string '(quote quote)) "'quote"))
-       (should (equal (pp-to-string '((quote a) (quote b))) "('a 'b)\n"))
-       (should (equal (pp-to-string '('a 'b)) "('a 'b)\n")))
+(load-file "kakuro.el")
 
 (ert-deftest kkr-test-empty ()
              ""
@@ -74,4 +73,16 @@
              (let ((result (kkr-solve-step (list (kkr-vv '(1 2)) (kkr-v)) 5)))
                (should (equal (kkr-vv '(1 2)) (cl-first result)))
                (should (equal (kkr-vv '(3 4)) (cl-second result)))))
+
+(ert-deftest kkr-test-takewhile ()
+             ""
+             (should (equal '(0 1 2 3) (-take-while (lambda (x) (< x 4)) (number-sequence 0 9)))))
+
+(ert-deftest kkr-test-drop ()
+             ""
+             (should (equal '(5 6) (-drop 4 '(1 2 3 4 5 6)))))
+
+(ert-deftest kkr-test-take()
+             ""
+             (should (equal '(1 2 3 4) (-take 4 '(1 2 3 4 5 6)))))
 

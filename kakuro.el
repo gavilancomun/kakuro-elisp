@@ -1,6 +1,7 @@
 (setq lexical-binding t)
 
 (require 'cl-lib)
+(require 'dash)
 
 (defun kkr-e ()
   '(:empty))
@@ -54,20 +55,17 @@
     ((= 1 (length colls)) (mapcar 'list (car colls)))
     (t (let ((head (car colls))
              (tail-prod (kkr-product (cdr colls))))
-         (apply 'append (mapcar (lambda (x)
-                                  (mapcar (lambda (y)
-                                            (append (list x) y))
-                                          tail-prod))
-                                head))))))
+         (-mapcat (lambda (x)
+                    (--map (append (list x) it) tail-prod))
+                  head)))))
 
 (defun kkr-all-different (nums)
   (= (length nums) (length (cl-remove-duplicates nums))))
 
 (defun kkr-permute-all (vs target)
   (let ((values (mapcar 'cl-second vs)))
-    (cl-remove-if-not (lambda (x) 
-                        (= target (apply '+ x)))
-                      (kkr-product values))))
+    (--filter (= target (apply '+ it))
+              (kkr-product values))))
 
 (defun kkr-transpose (m)
   (apply 'cl-mapcar 'list m))
@@ -78,10 +76,9 @@
 (defun kkr-solve-step (cells total)
   (let* ((final (- (length cells) 1))
          (p1 (kkr-permute-all cells total))
-         (p2 (cl-remove-if-not (lambda (x)
-                                 (kkr-is-possible (nth final cells) (nth final x)))
-                               p1))
-         (perms (cl-remove-if-not 'kkr-all-different p2)))
+         (p2 (--filter (kkr-is-possible (nth final cells) (nth final it))
+                       p1))
+         (perms (-filter 'kkr-all-different p2)))
     (cl-mapcar (lambda (x) (kkr-vv x))
                (kkr-transpose perms))))
 
