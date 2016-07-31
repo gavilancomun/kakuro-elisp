@@ -126,3 +126,15 @@
                (should (equal (kkr-vv '(1 2 3 4)) (cl-seventh result)))
                (should (equal (kkr-vv '(1 2 3 4)) (cl-eighth result)))))
 
+(ert-deftest kkr-test-solve-row ()
+             ""
+             (let ((result (kkr-solve-row (list (kkr-a 3) (kkr-vv '(1 2 3)) (kkr-vv '(1))))))
+               (should (equal (kkr-vv '(2)) (cl-second result)))
+               (should (equal (kkr-vv '(1)) (cl-third result)))))
+
+(ert-deftest kkr-test-solve-column ()
+             ""
+             (let ((result (kkr-solve-column (list (kkr-da 3 12) (kkr-vv '(1 2 3)) (kkr-vv '(1))))))
+               (should (equal (kkr-vv '(2)) (cl-second result)))
+               (should (equal (kkr-vv '(1)) (cl-third result)))))
+

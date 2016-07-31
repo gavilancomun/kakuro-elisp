@@ -106,3 +106,9 @@
   (let ((pairs (kkr-pair-targets-with-values line)))
     (-mapcat (-partial 'kkr-solve-pair f) pairs)))
 
+(defun kkr-solve-row (row)
+  (kkr-solve-line row (lambda (x) (car (last x)))))
+
+(defun kkr-solve-column (column)
+  (kkr-solve-line column (lambda (x) (cl-second x))))
+
